@@ -19,8 +19,7 @@ Route::get('champList','ChampionsController@index')->name('champList');
 Route::get('championAdded','ChampionsController@store')->name('create-champion');
 Route::resource('champ','ChampionsController');
 
-Route::get('/','ItemsController@index')->name('home');
-Route::get('/home','ItemsController@index')->name('home');
+Route::get('/items','ItemsController@index')->name('items');
 Route::get('createItem','ItemsController@create');
 Route::get('itemList','ItemsController@index')->name('itemList');
 Route::get('itemAdded','ItemsController@store')->name('create-item');

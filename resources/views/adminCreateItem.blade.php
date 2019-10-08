@@ -20,9 +20,12 @@
                             <div class="control">
                             <input type="number" name="cost" class="input" id="cost">
                             </div>
-                            <label for="AD/AP" class="label">AD/AP</label>
+                            <label for="ad" class="label">AD</label>
                             <div class="control">
-                            <input type="text" name="AD/AP" class="input" id="AD/AP">
+                            <input type="number" name="ad" class="input" id="ad">
+                            <label for="ap" class="label">AP</label>
+                            <div class="control">
+                            <input type="number" name="ap" class="input" id="ap">
                             </div>
                         <button type="submit" class="button is-dark is-centered is-rounded">Enviar</button>
                    </form>

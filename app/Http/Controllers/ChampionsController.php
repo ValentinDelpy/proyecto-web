@@ -15,7 +15,6 @@ class ChampionsController extends Controller
     public function index()
     {
         $champions = Champions::all();
-        dd($champions);
         return view('indexUser', compact('champions'));
     }
 
@@ -37,9 +36,15 @@ class ChampionsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => 'required | max:20',
+            'health_points' => 'required | max:10000',
+            'type' => 'required',
+            'role' => 'required'
+        ]);
         Champions::create($request->all());
         return view('adminCreateChampion');
-        alert('Champion ajouté');
+        alert('Champion added');
     }
 
     /**
@@ -48,9 +53,9 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function show(Champions $champions)
+    public function show(Champions $champ)
     {
-        //
+        return view('championShow', compact('champ'));
     }
 
     /**
@@ -59,9 +64,9 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function edit(Champions $champions)
+    public function edit(Champions $champ)
     {
-        //
+        return view('adminCreateChampion', compact('champ'));
     }
 
     /**
@@ -71,9 +76,22 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Champions $champions)
+    public function update(Request $request, Champions $champ)
     {
-        //
+        $request->validate([
+            'name' => 'required | max:20',
+            'health_points' => 'required | max:10000',
+            'type' => 'required',
+            'role' => 'required'
+        ]);
+        
+        $champ->name = $request->name;
+        $champ->health_points = $request->health_points;
+        $champ->type = $request->type;
+        $champ->role = $request->role;
+        $champ->save();
+
+        return redirect()->route('championShow', $champ->id);
     }
 
     /**
@@ -82,8 +100,9 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Champions $champions)
+    public function destroy(Champions $champ)
     {
-        //
+        $champ->delete();
+        return redirect()->route('champ.index');
     }
 }

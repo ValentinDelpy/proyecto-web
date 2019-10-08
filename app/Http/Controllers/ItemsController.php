@@ -15,7 +15,6 @@ class ItemsController extends Controller
     public function index()
     {
         $items = Items::all();
-        dd($items);
         return view('indexUser', compact('items'));
     }
 

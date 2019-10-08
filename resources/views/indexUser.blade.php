@@ -3,27 +3,24 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="column is-centered">
             <div class="card">
-                <div class="card-header">LISTA DE MENSAJES</div>
+                <div class="card-header">List of champions</div>
                 <div class="card-body">
                     <table class="table">
                     <thead> 
                         <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Health points</th>
-                        <th>Type</th>
-                        <th>Role</th>
+                        <th>Details</th>
                         </tr>
                     </thead>
-                    @foreach($champions as $champion)
+                    @foreach($champions as $champ)
                         <tr>
-                        <td>test{{ $champion->id }}</td>
-                        <td>{{ $champion->name }}</td>
-                        <td>{{ $champion->health_points }}</td>
-                        <td>{{ $champion->type }}</td>
-                        <td>{{ $champion->role }}</td>
+                        <td>{{ $champ->id }}</td>
+                        <td>{{ $champ->name }}</td>
+                        <td><a href="{{ route('champ.show', $champ->id) }}" className="button">See more</a></td>
+                        <td><a href="{{ route('champ.edit', $champ->id) }}" className="button">Edit </a></td>
                         </tr>
                     @endforeach
                     </table>
