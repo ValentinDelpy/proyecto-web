@@ -20,32 +20,39 @@
         @endif
 
         @if(isset($champ))
-        <form action="{{ route('champ.update', $champ->id) }}" method="GET">
-          <input type="hidden" name="_method" value="PATCH">
+        {!! Form::model('champ', ['route' => ['champ.update', $champ->id], 'method'=>'PATCH']) !!}
+          <!--<input type="hidden" name="_method" value="PATCH">-->
           @else
-          <form action="{{ route('create-champion') }}" method="GET">
+          {!! Form::open( ['route' => ['champ.store', $champ->id]]) !!}
             @endif
-            @csrf
-            <div>
+            {{--@csrf--}}
+            <div class="field">
+  <label class="label">Label</label>
+  <div class="control">
+    <input class="input" type="text" placeholder="Text input">
+  </div>
+  <p class="help">This is a help text</p>
+</div>
               <label for="correo" class="label">Name of your champion</label>
               <div class="control">
-                <input type="text" name="name" class="input" value="{{ $champ->name ?? '' }}" id="name" aria-describedby="championName">
+                <!--<input type="text" name="name" class="input" value="{{ $champ->name ?? '' }}" id="name" aria-describedby="championName">-->
+                {!! Form::text('name', $champ->name, ['class' => 'form-control', 'id' => 'name']) !!}
               </div>
               <label for="health_points" class="label">HP of your champion</label>
               <div class="control">
                 <input type="number" name="health_points" class="input" value="{{ $champ->health_points ?? '' }}" id="health_points">
               </div>
-              <label for="type" class="label">Type of your champion</label>
+              {!! Form::label('type', 'Type of your champion',  ['class' => 'label']) !!}              
               <div class="control">
-                <input type="text" name="type" class="input" value="{{ $champ->type ?? '' }}" id="type">
+               <!--<input type="text" name="type" class="input" value="{{ $champ->type ?? '' }}" id="type">-->
+               {!! Form::text('type', $champ->type, ['class' => 'form-control', 'value' => '$champ->type']) !!}
               </div>
               <label for="role" class="label">Role of your champion</label>
               <div class="control">
               </div>
               <input type="text" name="role" class="input" value="{{ $champ->role ?? '' }}" id="role">
-            </div>
             <button type="submit" class="button is-dark is-centered is-rounded">Enviar</button>
-          </form>
+          {!! Form::close() !!}
       </div>
     </div>
   </div>

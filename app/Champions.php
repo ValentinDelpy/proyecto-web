@@ -9,4 +9,8 @@ class Champions extends Model
     protected $table ='champions';
     public $timestamps = true;
     protected $fillable = ['id','name','health_points','type','role'];
+
+    public function champions(){
+        return $this->hasMany(Team::class);
+    }
 }

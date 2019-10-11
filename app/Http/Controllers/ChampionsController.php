@@ -91,7 +91,7 @@ class ChampionsController extends Controller
         $champ->role = $request->role;
         $champ->save();
 
-        return redirect()->route('championShow', $champ->id);
+        return redirect()->route('champ.show', $champ->id);
     }
 
     /**
