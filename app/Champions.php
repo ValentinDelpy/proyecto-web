@@ -12,4 +12,9 @@ class Champions extends Model
     public function team(){
         return $this->belongsTo('App\Teams', 'id');
     }
+
+    public function items(){
+        return $this->belongsToMany(Items::class);
+    }
 }
+

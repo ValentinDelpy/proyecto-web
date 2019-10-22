@@ -21,6 +21,21 @@ class CreateItemsTable extends Migration
             $table->integer('AP');
             $table->timestamps();
         });
+
+        Schema::create('champion_item', function (Blueprint $table) {
+            $table->unsignedBigInteger('champion_id');
+            $table->unsignedBigInteger('item_id');
+
+            $table->foreign('champion_id')
+                ->references('id')
+                ->on('champions')
+                ->onDelete('cascade');
+
+            $table->foreign('item_id')
+                ->references('id')
+                ->on('items')
+                ->onDelete('cascade');    
+        });
     }
 
     /**
@@ -30,6 +45,7 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('champion_item');
         Schema::dropIfExists('items');
     }
 }

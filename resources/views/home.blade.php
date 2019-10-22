@@ -13,8 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    {{ session(['pais' => 'Mexico']) }}
                     You are logged in!
+                    Bienvenido a {{ session('pais') }}
                 </div>
             </div>
         </div>
