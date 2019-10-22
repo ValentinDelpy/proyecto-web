@@ -12,15 +12,15 @@
 */
 Auth::routes();
 
-Route::get('/','ChampionsController@index')->name('home');
-Route::get('/home','ChampionsController@index')->name('home');
-Route::get('createChampion','ChampionsController@create');
-Route::get('champList','ChampionsController@index')->name('champList');
-Route::get('championAdded','ChampionsController@store')->name('create-champion');
-Route::resource('champ','ChampionsController');
+Route::get('/', function () {
+    return view('teams.teamIndex');
+});
+Route::get('/home', function () {
+    return view('welcome');
+});
 
-Route::get('/items','ItemsController@index')->name('items');
-Route::get('createItem','ItemsController@create');
-Route::get('itemList','ItemsController@index')->name('itemList');
-Route::get('itemAdded','ItemsController@store')->name('create-item');
-Route::resource('items','ItemsController');
+//Resources
+Route::resource('champion','ChampionsController');
+Route::resource('item','ItemsController');
+Route::resource('team','TeamsController');
+

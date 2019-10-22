@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Champions extends Model
 {
-    protected $table ='champions';
-    public $timestamps = true;
-    protected $fillable = ['id','name','health_points','type','role'];
+    protected $table = 'champions';
+    protected $fillable = ['name','health_points','type','role'];
 
-    public function champions(){
-        return $this->hasMany(Team::class);
+    public function team(){
+        return $this->belongsTo('App\Teams', 'id');
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Items;
+use App\Teams;
 use Illuminate\Http\Request;
 
-class ItemsController extends Controller
+class TeamsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -51,7 +51,7 @@ class ItemsController extends Controller
      * @param  \App\Items  $items
      * @return \Illuminate\Http\Response
      */
-    public function show(Items $items)
+    public function show(Teams $team)
     {
         return view('teams.teamForm', compact('team'));
     }
@@ -59,34 +59,43 @@ class ItemsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Items  $items
+     * @param  \App\Teams  $teams
      * @return \Illuminate\Http\Response
      */
-    public function edit(Items $items)
+    public function edit(Teams $teams)
     {
-        //
+        return view('teams.teamForm', compact('teams'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Items  $items
+     * @param  \App\Teams  $teams
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Items $items)
+    public function update(Request $request, Teams $teams)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:5|max:32',
+            'rank' => 'string|minx:2|max:32',
+            'region' => 'required|string|max:20',
+        ]);
+
+        $teams->name = $request->name;
+        $teams->rank = $request->rank;
+        $teams->region = $request->region;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Items  $items
+     * @param  \App\Teams  $teams
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Items $items)
+    public function destroy(Teams $teams)
     {
-        //
+        $teams->delete();
+        return redirect()->route('team.index');
     }
 }

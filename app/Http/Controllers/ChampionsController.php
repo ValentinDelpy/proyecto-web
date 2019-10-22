@@ -42,9 +42,9 @@ class ChampionsController extends Controller
             'type' => 'required',
             'role' => 'required'
         ]);
+
         Champions::create($request->all());
-        return view('adminCreateChampion');
-        alert('Champion added');
+        return redirect()->route('champion.index');
     }
 
     /**
@@ -91,7 +91,7 @@ class ChampionsController extends Controller
         $champ->role = $request->role;
         $champ->save();
 
-        return redirect()->route('champ.show', $champ->id);
+        return redirect()->route('champion.show', $champ->id);
     }
 
     /**
@@ -103,6 +103,6 @@ class ChampionsController extends Controller
     public function destroy(Champions $champ)
     {
         $champ->delete();
-        return redirect()->route('champ.index');
+        return redirect()->route('champion.index');
     }
 }
