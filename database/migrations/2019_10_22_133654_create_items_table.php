@@ -25,6 +25,7 @@ class CreateItemsTable extends Migration
         Schema::create('champion_item', function (Blueprint $table) {
             $table->unsignedBigInteger('champion_id');
             $table->unsignedBigInteger('item_id');
+            $table->boolean('contact');
 
             $table->foreign('champion_id')
                 ->references('id')

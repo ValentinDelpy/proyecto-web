@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    @if(isset($item))
+                    @if(isset($team))
                         {!! Form::model($team, ['route' => ['team.update', $team->id], 'method' => 'PATCH']) !!}
                     @else
                         {!! Form::open(['route' => 'team.store']) !!}

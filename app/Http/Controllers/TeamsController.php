@@ -15,7 +15,7 @@ class TeamsController extends Controller
     public function index()
     {
         $teams = Teams::all();
-        return view('teams.teamsIndex', compact('teams'));
+        return view('teams.teamIndex', compact('teams'));
     }
 
     /**
@@ -38,7 +38,7 @@ class TeamsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:5|max:32',
-            'rank' => 'string|minx:2|max:32',
+            'rank' => 'string|min:2|max:32',
             'region' => 'required|string|max:20',
         ]);
         Teams::create($request->all());
@@ -78,13 +78,15 @@ class TeamsController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:5|max:32',
-            'rank' => 'string|minx:2|max:32',
+            'rank' => 'string|min:2|max:32',
             'region' => 'required|string|max:20',
         ]);
 
         $teams->name = $request->name;
         $teams->rank = $request->rank;
         $teams->region = $request->region;
+
+        return redirect()->route('team.index');
     }
 
     /**

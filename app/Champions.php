@@ -14,7 +14,8 @@ class Champions extends Model
     }
 
     public function items(){
-        return $this->belongsToMany(Items::class);
+        return $this->belongsToMany(Items::class)->withPivot('contact');
     }
+
 }
 

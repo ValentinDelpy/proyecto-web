@@ -1,5 +1,6 @@
 <?php
 
+use App\Teams;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,14 +14,15 @@
 Auth::routes();
 
 Route::get('/', function () {
-    return view('teams.teamIndex');
+    $teams = Teams::all();
+    return view('teams.teamIndex', compact('teams'));
 });
 Route::get('/home', function () {
     return view('welcome');
 });
 
 //Resources
-Route::resource('champion','ChampionsController');
+Route::resource('champion','ChampionsController')->middleware('auth');
 Route::resource('item','ItemsController');
 Route::resource('team','TeamsController');
 

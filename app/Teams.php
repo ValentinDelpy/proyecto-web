@@ -12,4 +12,12 @@ class Teams extends Model
     public function teams(){
         return $this->hasMany(Champions::class, 'id');
     }
+
+    public function setNameAttribute($value){
+        $this->attributes['name'] = strtoupper($value);
+    }
+    
+    public function getTeamsNameAttribute(){
+        return $this->name;
+    }
 }

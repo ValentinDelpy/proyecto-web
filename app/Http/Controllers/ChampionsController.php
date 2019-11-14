@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ChampionsController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth')->only('create', 'edit');
+        $this->middleware('firstuser')->only('create');
+    }
     /**
      * Display a listing of the resource.
      *
