@@ -11,17 +11,6 @@ class ChampionsTableSeeder extends Seeder
      */
     public function run()
     {
-        \DB::table('champions')->insert([
-            'name' => 'Graves',
-            'health_points' => '600',
-            'type' => 'Bruiser',
-            'role' => 'Jungler'
-        ]);
-        App\Champions::create([
-            'name' => 'Leblanc',
-            'health_points' => '5500',
-            'type' => 'Mage',
-            'role' => 'Midlaner'
-        ]);
+        factory(App\Champions::class, 50)->create();
     }
 }

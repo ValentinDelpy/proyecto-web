@@ -58,9 +58,9 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function show(Champions $champ)
+    public function show()
     {
-        return view('championShow', compact('champ'));
+        return view('champions.championShow', compact('champion'));
     }
 
     /**
@@ -69,9 +69,9 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function edit(Champions $champ)
+    public function edit(Champions $champion)
     {
-        return view('adminCreateChampion', compact('champ'));
+        return view('adminCreateChampion', compact('champion'));
     }
 
     /**
@@ -81,7 +81,7 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Champions $champ)
+    public function update(Request $request, Champions $champion)
     {
         $request->validate([
             'name' => 'required | max:20',
@@ -96,7 +96,7 @@ class ChampionsController extends Controller
         $champ->role = $request->role;
         $champ->save();
 
-        return redirect()->route('champion.show', $champ->id);
+        return redirect()->route('champion.show', $champion->id);
     }
 
     /**

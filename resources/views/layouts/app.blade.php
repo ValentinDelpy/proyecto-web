@@ -37,7 +37,7 @@
         Home
       </a>
 
-      <a class="navbar-item">
+      <a class="navbar-item" href="{{ route('championsShow') }}">
         Champions
       </a>
 

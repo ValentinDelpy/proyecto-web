@@ -21,6 +21,8 @@ Route::get('/home', function () {
     return view('welcome');
 });
 
+Route::get('/championsShow', 'ChampionsController@show')->name('championsShow');
+
 //Resources
 Route::resource('champion','ChampionsController')->middleware('auth');
 Route::resource('item','ItemsController');
