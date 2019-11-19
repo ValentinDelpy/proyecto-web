@@ -3,14 +3,24 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\softDeletes;
 
 class Teams extends Model
 {
+    use SoftDeletes;
     protected $table = 'teams';
     protected $fillable = ['name','rank','region'];
 
-    public function teams(){
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function champions(){
         return $this->hasMany(Champions::class, 'id');
+    }
+
+    public function files(){
+        return $this->morphMany(File::class, 'model');
     }
 
     public function setNameAttribute($value){

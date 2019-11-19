@@ -14,7 +14,7 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        $teams = Teams::all();
+        $teams = Teams::with('champions:id,nombre', 'user')->paginate(10);
         return view('teams.teamIndex', compact('teams'));
     }
 
@@ -25,7 +25,8 @@ class TeamsController extends Controller
      */
     public function create()
     {
-        return view('teams.teamForm');
+        $champions = Champions::pluck('name','id');
+        return view('teams.teamForm', compact('champions'));
     }
 
     /**
@@ -36,13 +37,13 @@ class TeamsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|min:5|max:32',
-            'rank' => 'string|min:2|max:32',
-            'region' => 'required|string|max:20',
-        ]);
-        Teams::create($request->all());
-        return redirect()->route('team.index');
+        $request->merge(['user_id' => \Auth::id()]);
+
+        $team = Teams::create($request->all());
+
+        $team->champions()->attach($request->id);
+        return redirect()->route('team.show', $team->id)
+                ->with(['message' => 'Team created', 'type' => 'alert-success']);
     }
 
     /**
@@ -62,9 +63,12 @@ class TeamsController extends Controller
      * @param  \App\Teams  $teams
      * @return \Illuminate\Http\Response
      */
-    public function edit(Teams $teams)
+    public function edit(Teams $team)
     {
-        return view('teams.teamForm', compact('teams'));
+        $champions = Champions::pluck('name','id');
+        $selected = $team->champions()->pluck('id');
+        
+        return view('teams.teamForm', compact('champions', 'teams', 'selected'));
     }
 
     /**
@@ -74,7 +78,7 @@ class TeamsController extends Controller
      * @param  \App\Teams  $teams
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Teams $teams)
+    public function update(Request $request, Teams $team)
     {
         $request->validate([
             'name' => 'required|string|min:5|max:32',
@@ -82,11 +86,14 @@ class TeamsController extends Controller
             'region' => 'required|string|max:20',
         ]);
 
-        $teams->name = $request->name;
-        $teams->rank = $request->rank;
-        $teams->region = $request->region;
+        $team->name = $request->name;
+        $team->rank = $request->rank;
+        $team->region = $request->region;
+        $team->save();
+        $team->champions()->sync($request->id);
 
-        return redirect()->route('team.index');
+        return redirect()->route('team.show', $team->id)
+                ->with(['message' => 'Team created', 'type' => 'alert-success']);
     }
 
     /**
@@ -95,9 +102,19 @@ class TeamsController extends Controller
      * @param  \App\Teams  $teams
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Teams $teams)
+    public function destroy(Teams $team)
     {
-        $teams->delete();
+        $team->delete();
+        return redirect()->route('team.index', $team->id)
+                ->with(['message' => 'Team deleted', 'type' => 'alert-warning']);
+    }
+
+    public function notificateTeamCreated(Teams $team){
+        $team->load('user');
+
+        Mail::to($team->user->email)->send(new TeamCreated($team));
+
         return redirect()->route('team.index');
     }
+
 }

@@ -10,6 +10,6 @@ class Items extends Model
     protected $fillable = ['name', 'cost','AD','AP'];
 
     public function champions(){
-        return $this->belongsToMany(Champions::class)->withPivot('contact');
+        return $this->belongsToMany(Champions::class);
     }
 }

@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Champions of Legends</title>
+    <title>{{ config('app.name', 'Champions of Legends') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -19,53 +19,33 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-
 <body>
     <div id="app">
-        <nav class="navbar" arial-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="{{ url('/') }}">
-                    <img src="{{ asset('assets/img/lol_icon.jpg') }}" alt="Champions of Legends">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Champions of Legends') }}
                 </a>
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
-                </a>
-                </div>
-                <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item">
-        Home
-      </a>
+                </button>
 
-      <a class="navbar-item" href="{{ route('championsShow') }}">
-        Champions
-      </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav mr-auto">
 
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          Teams
-        </a>
+                    </ul>
 
-        <div class="navbar-dropdown">
-          <a class="navbar-item">
-            View teams
-          </a>
-          <a class="navbar-item">
-            Add team
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <div class="navbar-end">
-      <div class="navbar-item">
-      @guest
-        <div class="buttons">
-                                <a class="button is-light" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Authentication Links -->
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="button is-primary" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -93,6 +73,8 @@
         </nav>
 
         <main class="py-4">
+            @include('segments.formErrors')
+            @include('segments.messages')
             @yield('content')
         </main>
     </div>

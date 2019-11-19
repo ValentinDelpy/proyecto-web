@@ -22,21 +22,6 @@ class CreateItemsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('champion_item', function (Blueprint $table) {
-            $table->unsignedBigInteger('champion_id');
-            $table->unsignedBigInteger('item_id');
-            $table->boolean('contact');
-
-            $table->foreign('champion_id')
-                ->references('id')
-                ->on('champions')
-                ->onDelete('cascade');
-
-            $table->foreign('item_id')
-                ->references('id')
-                ->on('items')
-                ->onDelete('cascade');    
-        });
     }
 
     /**

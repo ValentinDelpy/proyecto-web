@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Champions;
+use App\Teams;
+use App\Items;
+
 use Illuminate\Http\Request;
 
 class ChampionsController extends Controller
@@ -30,7 +33,8 @@ class ChampionsController extends Controller
      */
     public function create()
     {
-        return view('adminCreateChampion');
+        $teams = Teams::pluck('name', 'id');
+        return view('champions.championForm',compact('teams'));
     }
 
     /**
@@ -48,8 +52,16 @@ class ChampionsController extends Controller
             'role' => 'required'
         ]);
 
-        Champions::create($request->all());
-        return redirect()->route('champion.index');
+        $champion = new Champion([
+            'name' => $request->name,
+            'health_points' => $request->health_points,
+            'type' => $request->type,
+            'role' => $request->role,
+        ]);
+
+        $team = Teams::find($request->id);
+        $team->champions()->save($champion);
+        return redirect()->route('champion.index', $champion->id);
     }
 
     /**
@@ -58,7 +70,7 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function show()
+    public function show(Champions $champion)
     {
         return view('champions.championShow', compact('champion'));
     }
@@ -90,11 +102,11 @@ class ChampionsController extends Controller
             'role' => 'required'
         ]);
         
-        $champ->name = $request->name;
-        $champ->health_points = $request->health_points;
-        $champ->type = $request->type;
-        $champ->role = $request->role;
-        $champ->save();
+        $champion->name = $request->name;
+        $champion->health_points = $request->health_points;
+        $champion->type = $request->type;
+        $champion->role = $request->role;
+        $champion->save();
 
         return redirect()->route('champion.show', $champion->id);
     }
@@ -105,9 +117,9 @@ class ChampionsController extends Controller
      * @param  \App\Champions  $champions
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Champions $champ)
+    public function destroy(Champions $champion)
     {
-        $champ->delete();
+        $champion->delete();
         return redirect()->route('champion.index');
     }
 }

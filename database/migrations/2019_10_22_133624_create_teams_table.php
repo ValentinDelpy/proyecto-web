@@ -15,11 +15,18 @@ class CreateTeamsTable extends Migration
     {
         Schema::create('teams', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('rank');
             $table->string('region');
             $table->timestamps();
+            $table->softDeletes();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
         });
+
     }
 
     /**

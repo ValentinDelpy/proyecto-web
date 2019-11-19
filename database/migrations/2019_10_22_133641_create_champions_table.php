@@ -21,6 +21,8 @@ class CreateChampionsTable extends Migration
             $table->string('role');
             $table->timestamps();
         });
+
+
     }
 
     /**
@@ -30,6 +32,7 @@ class CreateChampionsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('item_champion');
         Schema::dropIfExists('champions');
     }
 }

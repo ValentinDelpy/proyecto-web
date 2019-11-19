@@ -10,11 +10,11 @@ class Champions extends Model
     protected $fillable = ['name','health_points','type','role'];
 
     public function team(){
-        return $this->belongsTo('App\Teams', 'id');
+        return $this->belongsTo(Teams::class, 'id');
     }
 
     public function items(){
-        return $this->belongsToMany(Items::class)->withPivot('contact');
+        return $this->belongsToMany(Items::class);
     }
 
 }
