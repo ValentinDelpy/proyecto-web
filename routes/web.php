@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('teams.teamIndex', compact('teams'));
 });
 
+Route::get('/champions', function () {
+    $champions = Champions::all();
+    return view('champions.championIndex', compact('champions'));
+});
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
