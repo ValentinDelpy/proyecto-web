@@ -13,9 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    {{ session(['pais' => 'Mexico']) }}
-                    You are logged in!
-                    Bienvenido a {{ session('pais') }}
+                    You are logged in ! Welcome to Champions of Legends !
+                    <br/>
+                    {!! Html::linkRoute('team.index','Go home',array('class' => 'btn btn-danger btn-block')) !!}
                 </div>
             </div>
         </div>
