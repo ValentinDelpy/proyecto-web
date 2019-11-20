@@ -1,85 +1,36 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\File;
 use Illuminate\Http\Request;
-
 class FileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function upload(Request $request)
     {
-        //
+        if ($request->file->isValid()) {
+            $nombreHash = $request->file->store('');
+            File::create([
+                'model_id' => $request->model_id,
+                'model_type' => $request->model_type,
+                'original' => $request->file->getClientOriginalName(),
+                'hash' => $nombreHash,
+                'mime' => $request->file->getClientMimeType(),
+                'size' => $request->file->getClientSize(),
+            ]);
+        }
+        return redirect()->back();
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function download(File $file)
     {
-        //
+        $fileRoute = storage_path('app/' . $file->hash);
+        return response()->download($fileRoute, $file->original, ['Content-Type' => $file->mime]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function delete(File $file)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function show(File $file)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(File $file)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, File $file)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\File  $file
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(File $file)
-    {
-        //
+        $fileRoute = storage_path($file->hash);
+        if (\Storage::exists($file->hash)) {
+            \Storage::delete($file->hash);
+            $file->delete();
+        }
+        return redirect()->back();
     }
 }

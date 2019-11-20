@@ -32,6 +32,8 @@
                     </table>
                 </div>
             </div>
+            @include('files.fileForm', ['model_id' => $team->id, 'model_type' => 'App\Teams'])
+            @include('files.fileIndex', ['files' => $team->files])
         </div>
     </div>
 </div>

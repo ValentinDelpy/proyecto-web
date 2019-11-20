@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Teams;
 use Illuminate\Http\Request;
+use App\Champions;
 
 class TeamsController extends Controller
 {
@@ -26,7 +27,7 @@ class TeamsController extends Controller
     public function create()
     {
         $champions = Champions::pluck('name','id');
-        return view('teams.teamForm', compact('champions'));
+        return view('teams.teamForm', compact('champions','user:id'));
     }
 
     /**
@@ -92,7 +93,7 @@ class TeamsController extends Controller
         $team->save();
         $team->champions()->sync($request->id);
 
-        return redirect()->route('team.show', $team->id)
+        return redirect()->route('team.index')
                 ->with(['message' => 'Team created', 'type' => 'alert-success']);
     }
 

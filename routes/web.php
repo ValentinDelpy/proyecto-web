@@ -14,7 +14,8 @@ use App\Items;
 |
 */
 Route::get('/', function () {
-    return view('welcome');
+    $teams = Teams::all();
+    return view('teams.teamIndex', compact('teams'));
 });
 
 Auth::routes(['verify' => true]);
@@ -28,9 +29,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('team', 'TeamsController');
 
 
-    //Manejo de Archivos
-    Route::post('archivo/cargar', 'ArchivoController@upload')->name('archivo.upload');
-    Route::get('archivo/{archivo}/descargar', 'ArchivoController@download')->name('archivo.download');
-    Route::post('archivo/{archivo}/borrar', 'ArchivoController@delete')->name('archivo.delete');
+    //File manager
+    Route::post('file/load', 'FileController@upload')->name('file.upload');
+    Route::get('file/{file}/download', 'FileController@download')->name('file.download');
+    Route::post('file/{file}/delete', 'FileController@delete')->name('file.delete');
 });
 
