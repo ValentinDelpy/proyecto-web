@@ -2,36 +2,45 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Teams</div>
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">List of teams</div>
 
-                <div class="card-body">
-                  <a href="{{ route('team.create') }}" class="btn btn-success btn-sm">Add a team</a>
-                    <table class="table">
-                      <thead>
-                        <tr><th>ID</th> <th>Team name</th> <th>Rank</th> <th>Region</th> <th>Actions</th></tr>
-                      </thead>
-                      <tbody>
-                        @foreach($teams as $team)
-                          <tr>
-                            <td>{{ $team->id }}</td>
-                            <td>{{ $team->name }}</td>
-                            <td>{{ $team->rank }}</td>
-                            <td>{{ $team->region }}</td>
-                            <td>
-                                <a href="{{ route('team.show', $team->id) }}" class="btn btn-sm btn-info">View details</a>
-                            </td>
-                          </tr>
-                        @endforeach
-                      </tbody>
-                    </table>
-                </div>
-            </div>
-            @include('files.fileForm', ['model_id' => $team->id, 'model_type' => 'App\Teams'])
-            @include('files.fileIndex', ['files' => $team->files])
+        <div class="card-body">
+          <table class="table">
+            <tr>
+              <th>Team</th>
+              <th>Champions</th>
+              <th>User</th>
+              <th>Actions</th>
+            </tr>
+            @foreach($teams as $team)
+            <tr>
+              <td>
+                <a href="{{ route('team.show', $team->id) }}">
+                  {{ $team->name }}
+                </a>
+              </td>
+              <td>
+                <ul>
+                  @foreach($team->champions as $champion)
+                  <li>{{ $champion->name }}</li>
+                  @endforeach
+                </ul>
+              </td>
+              <td>
+                {{$team->user->name}}
+              </td>
+              <td>
+                <a href="{{ route('team.created', $team->id) }}" class="btn btn-sm btn-primary">Notificate created</a>
+              </td>
+            </tr>
+            @endforeach
+          </table>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 @endsection

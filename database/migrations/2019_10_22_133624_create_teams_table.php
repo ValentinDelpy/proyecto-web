@@ -19,6 +19,7 @@ class CreateTeamsTable extends Migration
             $table->string('name');
             $table->string('rank');
             $table->string('region');
+            $table->string('estatus',30)->default('');
             $table->timestamps();
             $table->softDeletes();
 
@@ -36,6 +37,7 @@ class CreateTeamsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('champion_team');
         Schema::dropIfExists('teams');
     }
 }

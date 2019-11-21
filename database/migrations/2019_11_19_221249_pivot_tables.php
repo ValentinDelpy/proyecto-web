@@ -13,22 +13,8 @@ class PivotTables extends Migration
      */
     public function up()
     {
-        Schema::create('item_champion', function (Blueprint $table){
-            $table->unsignedBigInteger('item_id');
-            $table->unsignedBigInteger('champion_id');
 
-            $table->foreign('item_id')
-                ->references('id')
-                ->on('items')
-                ->onDelete('cascade');
-
-            $table->foreign('champion_id')
-                ->references('id')
-                ->on('champions')
-                ->onDelete('cascade');
-        });
-
-        Schema::create('champion_team', function(Blueprint $table){
+        Schema::create('champions_teams', function(Blueprint $table){
             $table->unsignedBigInteger('champion_id');
             $table->unsignedBigInteger('team_id');
 
@@ -42,6 +28,7 @@ class PivotTables extends Migration
                 ->on('teams')
                 ->onDelete('cascade');
         });
+        
     }
 
     /**

@@ -29,7 +29,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('champion', 'ChampionsController');
-    Route::resource('items', 'ItemsController');
+    Route::resource('item', 'ItemsController');
     Route::get('team/{team}/created', 'TeamController@notificateTeamCreated')->name('team.created');
     Route::resource('team', 'TeamsController');
 

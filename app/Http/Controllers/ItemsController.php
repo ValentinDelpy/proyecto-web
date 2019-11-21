@@ -14,8 +14,7 @@ class ItemsController extends Controller
      */
     public function index()
     {
-        $teams = Teams::all();
-        return view('teams.teamsIndex', compact('teams'));
+        //
     }
 
     /**
@@ -25,7 +24,8 @@ class ItemsController extends Controller
      */
     public function create()
     {
-        return view('teams.teamForm');
+        $champions = Champions::pluck('name','id');
+        return view('items.itemForm', compact('champions'));
     }
 
     /**
@@ -37,12 +37,23 @@ class ItemsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|min:5|max:32',
-            'rank' => 'string|minx:2|max:32',
-            'region' => 'required|string|max:20',
+            'name' => 'required|string|max:255',
+            'cost' => 'int|min:2|max:5000',
+            'AD' => 'required|int|max:200',
+            'AP' => 'required|int|max:200',
+            'champion_id' => 'required|integer|min:1',
         ]);
-        Teams::create($request->all());
-        return redirect()->route('team.index');
+        $item = new Item([
+            'name' => $request->name,
+            'cost' => $request->cost,
+            'AD' => $request->AD,
+            'AP' => $request->AP,
+        ]);
+
+        $champion = Champions::find($request->champion_id);
+        $champion->items()->save($item);
+
+        return redirect()->route('item.show', $item->id);
     }
 
     /**
@@ -53,7 +64,7 @@ class ItemsController extends Controller
      */
     public function show(Items $items)
     {
-        return view('teams.teamForm', compact('team'));
+        return view('items.itemShow', compact('item'));
     }
 
     /**

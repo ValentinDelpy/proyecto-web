@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Teams;
+use App\Mail\TeamCreated;
 use Illuminate\Http\Request;
+use Illuminate\Http\Facades\Mail;
 use App\Champions;
 
 class TeamsController extends Controller
@@ -15,7 +17,7 @@ class TeamsController extends Controller
      */
     public function index()
     {
-        $teams = Teams::with('champions:id,nombre', 'user')->paginate(10);
+        $teams = Teams::with('champions:id,name','user')->get();
         return view('teams.teamIndex', compact('teams'));
     }
 
@@ -27,7 +29,7 @@ class TeamsController extends Controller
     public function create()
     {
         $champions = Champions::pluck('name','id');
-        return view('teams.teamForm', compact('champions','user:id'));
+        return view('teams.teamForm', compact('champions'));
     }
 
     /**
@@ -41,11 +43,10 @@ class TeamsController extends Controller
         $request->merge(['user_id' => \Auth::id()]);
 
         $team = Teams::create($request->all());
+        $team->champions()->attach($request->champion_id);
 
-        $team->champions()->attach($request->id);
         return redirect()->route('team.show', $team->id)
-                ->with(['message' => 'Team created', 'type' => 'alert-success']);
-    }
+            ->with(['message' => 'Team successfully created', 'type' => 'alert-success']);    }
 
     /**
      * Display the specified resource.
@@ -69,7 +70,7 @@ class TeamsController extends Controller
         $champions = Champions::pluck('name','id');
         $selected = $team->champions()->pluck('id');
         
-        return view('teams.teamForm', compact('champions', 'teams', 'selected'));
+        return view('teams.teamForm', compact('champions', 'team', 'selected'));
     }
 
     /**
@@ -91,10 +92,9 @@ class TeamsController extends Controller
         $team->rank = $request->rank;
         $team->region = $request->region;
         $team->save();
-        $team->champions()->sync($request->id);
-
-        return redirect()->route('team.index')
-                ->with(['message' => 'Team created', 'type' => 'alert-success']);
+        $team->champions()->sync($request->champion_id);
+        return redirect()->route('team.show', $team->id)
+            ->with(['message' => 'Team sucessfully created', 'type' => 'alert-success']);
     }
 
     /**
@@ -106,15 +106,13 @@ class TeamsController extends Controller
     public function destroy(Teams $team)
     {
         $team->delete();
-        return redirect()->route('team.index', $team->id)
-                ->with(['message' => 'Team deleted', 'type' => 'alert-warning']);
+        return redirect()->route('team.index')->with(['message' => 'Team successfully deleted', 'type' => 'alert-warning']);
     }
 
     public function notificateTeamCreated(Teams $team){
         $team->load('user');
-
-        Mail::to($team->user->email)->send(new TeamCreated($team));
-
+        //Envía correo al usuario
+        Mail::to($team->user->email)->send(new ProyectosAprovados($team));
         return redirect()->route('team.index');
     }
 

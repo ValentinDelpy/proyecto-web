@@ -5,26 +5,32 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header">Adding a team</div>
+
                 <div class="card-body">
                     @if(isset($team))
-                        {!! Form::model($team, ['route' => ['team.update', $team->id], 'method' => 'PATCH']) !!}
+                      {!! Form::model($team, ['route' => ['team.update', $team->id], 'method' => 'PATCH']) !!}
                     @else
-                        {!! Form::open(['route' => 'team.store']) !!}
+                      {!! Form::open(['route' => 'team.store']) !!}
                     @endif
                       <div class="form-group">
-                        {!! Form::label('name', 'Team name') !!}
-                        {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control is-invalid' : 'form-control']) !!}
+                          {!! Form::label('name', 'Name of the team') !!}
+                          {!! Form::text('name', null, ['class' => 'form-control']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::label('rank', 'Rank') !!}
-                        {!! Form::text('rank', null, ['class' => $errors->has('rank') ? 'form-control is-invalid' : 'form-control']) !!}
+                          {!! Form::label('rank', 'Rank of the team') !!}
+                          {!! Form::text('rank', null, ['class' => 'form-control']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::label('region', 'Region') !!}
-                        {!! Form::text('region', null, ['class' => $errors->has('region') ? 'form-control is-invalid' : 'form-control']) !!}
+                          {!! Form::label('region', 'Region of the team') !!}
+                          {!! Form::text('region', null, ['class' => 'form-control']) !!}
                       </div>
-                      <button type="submit" class="btn btn-primary">Send</button>
+                      <div class="form-group">
+                          {!! Form::label('champion_id[]', 'Champions') !!}
+                          {!! Form::select('champion_id[]', $champions, $selected ?? null, ['class' => 'form-control', 'multiple']) !!}
+                      </div>
+
+                      <button type="submit" class="btn btn-primary">Enviar</button>
                     {!! Form::close() !!}
                 </div>
             </div>

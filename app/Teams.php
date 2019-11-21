@@ -9,14 +9,14 @@ class Teams extends Model
 {
     use SoftDeletes;
     protected $table = 'teams';
-    protected $fillable = ['name','rank','region'];
+    protected $fillable = ['user_id','name','rank','region'];
 
     public function user(){
         return $this->belongsTo(User::class);
     }
 
     public function champions(){
-        return $this->belongsToMany(Champions::class, 'id');
+        return $this->belongsToMany(Champions::class);
     }
 
     public function files(){

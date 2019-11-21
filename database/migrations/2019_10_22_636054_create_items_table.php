@@ -15,11 +15,17 @@ class CreateItemsTable extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('champion_id')->nullable();
             $table->string('name');
             $table->integer('cost');
             $table->integer('AD');
             $table->integer('AP');
             $table->timestamps();
+
+            $table->foreign('champion_id')
+            ->references('id')
+            ->on('champions')
+            ->onDelete('cascade');
         });
 
     }
@@ -31,7 +37,6 @@ class CreateItemsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('champion_item');
         Schema::dropIfExists('items');
     }
 }

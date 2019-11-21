@@ -11,6 +11,6 @@ class ChampionsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Champions::class, 50)->create();
+        factory(App\Champions::class, 200)->create();
     }
 }
