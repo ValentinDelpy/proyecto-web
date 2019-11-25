@@ -30,7 +30,7 @@
                           {!! Form::select('champion_id[]', $champions, $selected ?? null, ['class' => 'form-control', 'multiple']) !!}
                       </div>
 
-                      <button type="submit" class="btn btn-primary">Enviar</button>
+                      <button type="submit" class="btn btn-primary">Send</button>
                     {!! Form::close() !!}
                 </div>
             </div>

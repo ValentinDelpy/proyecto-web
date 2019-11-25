@@ -34,7 +34,7 @@
                         {!! Form::text('health_points', null, ['class' => $errors->has('health_points') ? 'form-control is-invalid' : 'form-control']) !!}
                       </div>
                       <div class="form-group">
-                        {!! Form::label('type', 'Role') !!}
+                        {!! Form::label('type', 'Type') !!}
                         {!! Form::text('type', null, ['class' => $errors->has('type') ? 'form-control is-invalid' : 'form-control']) !!}
                       </div>
                       <div class="form-group">

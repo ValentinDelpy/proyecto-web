@@ -23,7 +23,7 @@ class ChampionsController extends Controller
     public function index()
     {
         $champions = Champions::all();
-        return view('indexUser', compact('champions'));
+        return view('champions.championIndex', compact('champions'));
     }
 
     /**
@@ -83,7 +83,7 @@ class ChampionsController extends Controller
      */
     public function edit(Champions $champion)
     {
-        return view('adminCreateChampion', compact('champion'));
+        return view('champions.championForm', compact('champion'));
     }
 
     /**
