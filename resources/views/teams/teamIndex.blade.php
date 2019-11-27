@@ -8,6 +8,7 @@
         <div class="card-header">List of teams</div>
 
         <div class="card-body">
+        <a href="{{ route('team.create') }}" class="btn btn-success btn-sm">Add a team</a>
           <table class="table">
             <tr>
               <th>Team</th>

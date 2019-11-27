@@ -39,21 +39,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Champions
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="{{ url('/champions') }}">See</a>
-                                <a class="dropdown-item" href="{{ route('champion.create') }}">Create</a>
-                            </div>
-                        </div>
+                        <a class="btn btn-outline-primary" href="{{ url('/champions') }}" role="button">
+                            Champions
+                        </a>
                     </ul>
                     <ul class="navbar-nav mr-auto">
-                        oui
-                    </ul>
-                    <ul class="navbar-nav mr-auto">
-                        oui
+                        <a class="btn btn-outline-primary" href="{{ url('/teams') }}" role="button">
+                            Teams
+                        </a>
                     </ul>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">

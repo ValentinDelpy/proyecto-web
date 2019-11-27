@@ -14,12 +14,18 @@
                     <li>{{ $champion->name }}</li>
                   @endforeach
                 </ul>
+                <p>Rank : {{ $team->rank }}</p>
+                <p>Region : {{ $team->region }}</p>
+                </ul>
+                <br/>
                 {!! Form::model($team, ['route' => ['team.destroy', $team->id], 'method' => 'DELETE']) !!}
                     {!! Form::submit('Delete', ['class' => 'bnt btn-sm btn-danger']) !!}
                 {!! Form::close() !!}
                 </div>
             </div>
+            <br/>
             @include('files.fileForm', ['model_id' => $team->id, 'model_type' => 'App\Teams'])
+            <br/>
             @include('files.fileIndex', ['files' => $team->files])
         </div>
     </div>

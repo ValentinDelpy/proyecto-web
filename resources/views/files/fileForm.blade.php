@@ -4,6 +4,7 @@
         {!! Form::open(['route' => 'file.upload', 'files' => true]) !!}
             <div class="form-group">
                 {!! Form::label('file', 'Load file') !!}
+                <br/>
                 {!! Form::file('file') !!}
             </div>
             {!! Form::hidden('model_id', $model_id) !!}

@@ -8,7 +8,7 @@
                 <div class="card-header">Champions</div>
 
                 <div class="card-body">
-                  <a href="{{ route('champion.create') }}" class="btn btn-success btn-sm">Add a champion</a>
+                <a href="{{ route('champion.create') }}" class="btn btn-success btn-sm">Add a champion</a>
                     <table class="table">
                       <thead>
                         <tr><th>ID</th> <th>Name</th> <th>Health Points</th> <th>Type</th> <th>Role</th></tr>

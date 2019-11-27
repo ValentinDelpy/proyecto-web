@@ -33,8 +33,8 @@ class ChampionsController extends Controller
      */
     public function create()
     {
-        $teams = Teams::pluck('name', 'id');
-        return view('champions.championForm',compact('teams'));
+        $teams = Teams::pluck('name','id');
+        return view('champions.championForm', compact('teams'));
     }
 
     /**

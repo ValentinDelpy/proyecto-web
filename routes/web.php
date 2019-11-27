@@ -3,6 +3,8 @@
 use App\Teams;
 use App\Champions;
 use App\Items;
+use Illuminate\Http\Facades\Mail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +25,16 @@ Route::get('/champions', function () {
     return view('champions.championIndex', compact('champions'));
 });
 
+Route::get('/teams', function () {
+    $teams = Teams::all();
+    return view('teams.teamIndex', compact('teams'));
+});
+
+Route::get('/items', function () {
+    $items = Items::all();
+    return view('items.itemIndex', compact('items'));
+});
+
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -30,7 +42,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('champion', 'ChampionsController');
     Route::resource('item', 'ItemsController');
-    Route::get('team/{team}/created', 'TeamController@notificateTeamCreated')->name('team.created');
+    Route::get('team/{team}/created', 'TeamsController@notificateTeamCreated')->name('team.created');
     Route::resource('team', 'TeamsController');
 
 

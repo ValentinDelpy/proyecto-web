@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Teams;
+use App\Champions;
 use App\Mail\TeamCreated;
 use Illuminate\Http\Request;
-use Illuminate\Http\Facades\Mail;
-use App\Champions;
+use Illuminate\Support\Facades\Mail;
 
 class TeamsController extends Controller
 {
@@ -41,6 +41,11 @@ class TeamsController extends Controller
     public function store(Request $request)
     {
         $request->merge(['user_id' => \Auth::id()]);
+        $request->validate([
+            'name' => 'required|string|min:5|max:32',
+            'rank' => 'string|min:2|max:32',
+            'region' => 'required|string|max:20',
+        ]);
 
         $team = Teams::create($request->all());
         $team->champions()->attach($request->champion_id);
@@ -56,7 +61,7 @@ class TeamsController extends Controller
      */
     public function show(Teams $team)
     {
-        return view('teams.teamForm', compact('team'));
+        return view('teams.teamShow', compact('team'));
     }
 
     /**
@@ -112,7 +117,7 @@ class TeamsController extends Controller
     public function notificateTeamCreated(Teams $team){
         $team->load('user');
         //Envía correo al usuario
-        Mail::to($team->user->email)->send(new ProyectosAprovados($team));
+        Mail::to($team->user->email)->send(new TeamCreated($team));
         return redirect()->route('team.index');
     }
 

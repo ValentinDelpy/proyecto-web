@@ -8,7 +8,8 @@
                 <div class="card-header">Champion informations</div>
 
                 <div class="card-body">
-                  <a href="{{ route('champion.index') }}" class="btn btn-default btn-sm">List of champions</a>
+                  <a href="{{ route('champion.index') }}" class="btn btn-outline-primary">List of champions</a>
+                  <br/>
                     <table class="table">
                       <thead>
                       <tr><th>ID</th> <th>Name</th> <th>Health Points</th> <th>Type</th> <th>Role</th></tr>
