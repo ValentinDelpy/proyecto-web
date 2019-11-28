@@ -6,7 +6,6 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Champions</div>
-
                 <div class="card-body">
                 <a href="{{ route('champion.create') }}" class="btn btn-success btn-sm">Add a champion</a>
                     <table class="table">
