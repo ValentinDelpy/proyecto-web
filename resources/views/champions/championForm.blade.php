@@ -41,6 +41,7 @@
                         {!! Form::label('role', 'Role') !!}
                         {!! Form::text('role', null, ['class' => $errors->has('role') ? 'form-control is-invalid' : 'form-control']) !!}
                       </div>
+
                       <button type="submit" class="btn btn-primary">Send</button>
                     {!! Form::close() !!}
                 </div>

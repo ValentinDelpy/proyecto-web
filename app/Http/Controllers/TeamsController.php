@@ -46,12 +46,12 @@ class TeamsController extends Controller
             'rank' => 'string|min:2|max:32',
             'region' => 'required|string|max:20',
         ]);
-
         $team = Teams::create($request->all());
         $team->champions()->attach($request->champion_id);
 
         return redirect()->route('team.show', $team->id)
-            ->with(['message' => 'Team successfully created', 'type' => 'alert-success']);    }
+            ->with(['message' => 'Team successfully created', 'type' => 'alert-success']);    
+    }
 
     /**
      * Display the specified resource.

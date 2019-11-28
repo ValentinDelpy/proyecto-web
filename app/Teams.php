@@ -16,7 +16,7 @@ class Teams extends Model
     }
 
     public function champions(){
-        return $this->belongsToMany(Champions::class, 'champions_teams', 'champion_id', 'team_id');
+        return $this->belongsToMany(Champions::class, 'champions_teams', 'team_id','champion_id');
     }
 
     public function files(){
